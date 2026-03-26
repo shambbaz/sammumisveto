@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Milloin Pavone sammuu? 🍺</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #1a9e6e;
+    --green-dark: #0f6e4c;
+    --green-light: #d4f5e9;
+    --bg: #0d1f17;
+    --bg2: #142a1f;
+    --bg3: #1a3328;
+    --text: #e8f5ee;
+    --text2: #8ab89e;
+    --border: rgba(255,255,255,0.08);
+    --accent: #f5c518;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse at 20% 0%, rgba(26,158,110,0.15) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 100%, rgba(26,158,110,0.1) 0%, transparent 60%);
+  }
+
+  header {
+    text-align: center;
+    padding: 3rem 1rem 1.5rem;
+    position: relative;
+  }
+  .beer-icon { font-size: 52px; animation: sway 3s ease-in-out infinite; display: inline-block; }
+  @keyframes sway {
+    0%,100% { transform: rotate(-5deg); }
+    50% { transform: rotate(5deg); }
+  }
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(42px, 10vw, 80px);
+    letter-spacing: 2px;
+    line-height: 1;
+    margin: 0.5rem 0 0.25rem;
+    background: linear-gradient(135deg, #e8f5ee 0%, #1a9e6e 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .subtitle {
+    color: var(--text2);
+    font-size: 14px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+
+  .stats-row {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    padding: 0 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+  .stat-pill {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 8px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 90px;
+  }
+  .stat-val { font-family: 'Bebas Neue', sans-serif; font-size: 26px; color: var(--green); line-height: 1; }
+  .stat-lbl { font-size: 11px; color: var(--text2); letter-spacing: 1px; text-transform: uppercase; margin-top: 2px; }
+
+  .main { max-width: 560px; margin: 0 auto; padding: 0 1rem 4rem; }
+
+  .card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .card-title {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text2);
+    margin-bottom: 1rem;
+  }
+
+  input[type="text"] {
+    width: 100%;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 16px;
+    font-size: 16px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    outline: none;
+    transition: border-color 0.2s;
+    margin-bottom: 1.25rem;
+  }
+  input[type="text"]:focus { border-color: var(--green); }
+  input[type="text"]::placeholder { color: var(--text2); }
+
+  .time-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .time-btn {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 4px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text2);
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.15s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .time-btn:hover { border-color: var(--green); color: var(--text); }
+  .time-btn.selected { background: var(--green); border-color: var(--green); color: #fff; }
+
+  .custom-row { margin-top: 10px; margin-bottom: 0; }
+
+  .submit-btn {
+    width: 100%;
+    padding: 16px;
+    background: var(--green);
+    color: #fff;
+    border: none;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 2px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    margin-top: 1rem;
+  }
+  .submit-btn:hover { background: var(--green-dark); }
+  .submit-btn:active { transform: scale(0.98); }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 2px;
+    color: var(--text);
+    margin-bottom: 1rem;
+  }
+
+  .bet-item {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: border-color 0.2s;
+    animation: fadeIn 0.3s ease;
+  }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  .bet-item:hover { border-color: rgba(26,158,110,0.3); }
+  .bet-left { display: flex; align-items: center; gap: 12px; }
+  .avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; font-weight: 600; color: var(--green);
+    flex-shrink: 0;
+  }
+  .bet-name { font-weight: 600; font-size: 15px; color: var(--text); }
+  .bet-ago { font-size: 12px; color: var(--text2); margin-top: 2px; }
+  .bet-time {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px;
+    color: var(--accent);
+    letter-spacing: 1px;
+  }
+
+  .empty {
+    text-align: center;
+    color: var(--text2);
+    font-size: 14px;
+    padding: 3rem 1rem;
+    border: 1px dashed var(--border);
+    border-radius: 16px;
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--green);
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 500;
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.3s;
+    pointer-events: none;
+    z-index: 100;
+    white-space: nowrap;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  .medal { font-size: 16px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="beer-icon">🍺</div>
+  <h1>Milloin Pavone sammuu?</h1>
+  <p class="subtitle">Mökkireissun virallinen sammumisennustus</p>
+</header>
+
+<div class="stats-row">
+  <div class="stat-pill">
+    <div class="stat-val" id="bet-count">0</div>
+    <div class="stat-lbl">veikkaajaa</div>
+  </div>
+  <div class="stat-pill">
+    <div class="stat-val" id="earliest-bet">–</div>
+    <div class="stat-lbl">aikaisin</div>
+  </div>
+  <div class="stat-pill">
+    <div class="stat-val" id="latest-bet">–</div>
+    <div class="stat-lbl">myöhäisin</div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="card">
+    <div class="card-title">Lyö vetosi</div>
+    <input type="text" id="name-input" placeholder="Nimesi..." maxlength="30" />
+    <div class="card-title">Kellonaika</div>
+    <div class="time-grid" id="time-grid">
+      <div class="time-btn" data-time="21:00">klo 21</div>
+      <div class="time-btn" data-time="22:00">klo 22</div>
+      <div class="time-btn" data-time="23:00">klo 23</div>
+      <div class="time-btn" data-time="00:00">klo 00</div>
+      <div class="time-btn" data-time="01:00">klo 01</div>
+      <div class="time-btn" data-time="02:00">klo 02</div>
+      <div class="time-btn" data-time="03:00">klo 03</div>
+      <div class="time-btn" data-time="Ei sammu">ei sammu 💪</div>
+    </div>
+    <input type="text" id="custom-time" placeholder="Tai kirjoita oma aika, esim. 01:30" maxlength="20" class="custom-row" />
+    <button class="submit-btn" onclick="submitBet()">🍺 LYÖ VETO</button>
+  </div>
+
+  <div class="section-title">Veikkaukset</div>
+  <div id="bets-list">
+    <div class="empty">Ei vielä veikkauksia – ole ensimmäinen! 🍻</div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  let selectedTime = null;
+  let bets = [];
+
+  try {
+    const saved = localStorage.getItem('pavone_bets_v2');
+    if (saved) bets = JSON.parse(saved);
+  } catch(e) {}
+
+  function save() {
+    try { localStorage.setItem('pavone_bets_v2', JSON.stringify(bets)); } catch(e) {}
+  }
+
+  document.querySelectorAll('.time-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      selectedTime = btn.dataset.time;
+      document.getElementById('custom-time').value = '';
+    });
+  });
+
+  document.getElementById('custom-time').addEventListener('input', function() {
+    if (this.value) {
+      document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('selected'));
+      selectedTime = this.value;
+    } else {
+      selectedTime = null;
+    }
+  });
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+  }
+
+  function esc(s) {
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  function timeAgo(ts) {
+    const diff = Math.floor((Date.now() - ts) / 60000);
+    if (diff < 1) return 'juuri äsken';
+    if (diff < 60) return diff + ' min sitten';
+    const h = Math.floor(diff / 60);
+    return h + ' h sitten';
+  }
+
+  function submitBet() {
+    const name = document.getElementById('name-input').value.trim();
+    const custom = document.getElementById('custom-time').value.trim();
+    if (custom) selectedTime = custom;
+    if (!name) { showToast('⚠️ Kirjoita nimesi ensin!'); return; }
+    if (!selectedTime) { showToast('⚠️ Valitse kellonaika!'); return; }
+
+    const existing = bets.findIndex(b => b.name.toLowerCase() === name.toLowerCase());
+    if (existing >= 0) {
+      bets[existing].time = selectedTime;
+      bets[existing].ts = Date.now();
+      showToast('✅ Veikkauksesi päivitettiin!');
+    } else {
+      bets.push({ name, time: selectedTime, ts: Date.now() });
+      showToast('🍺 Veto lyöty!');
+    }
+
+    save();
+    document.getElementById('name-input').value = '';
+    document.getElementById('custom-time').value = '';
+    document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('selected'));
+    selectedTime = null;
+    render();
+  }
+
+  function render() {
+    const list = document.getElementById('bets-list');
+    document.getElementById('bet-count').textContent = bets.length;
+
+    if (bets.length === 0) {
+      list.innerHTML = '<div class="empty">Ei vielä veikkauksia – ole ensimmäinen! 🍻</div>';
+      document.getElementById('earliest-bet').textContent = '–';
+      document.getElementById('latest-bet').textContent = '–';
+      return;
+    }
+
+    const sorted = [...bets].sort((a, b) => {
+      if (a.time === 'Ei sammu') return 1;
+      if (b.time === 'Ei sammu') return -1;
+      return a.time.localeCompare(b.time);
+    });
+
+    const medals = ['🥇','🥈','🥉'];
+    list.innerHTML = sorted.map((b, i) => {
+      const initials = b.name.slice(0,2).toUpperCase();
+      const medal = medals[i] || '';
+      return `<div class="bet-item">
+        <div class="bet-left">
+          <div class="avatar">${initials}</div>
+          <div>
+            <div class="bet-name">${medal} ${esc(b.name)}</div>
+            <div class="bet-ago">${timeAgo(b.ts)}</div>
+          </div>
+        </div>
+        <div class="bet-time">${esc(b.time)}</div>
+      </div>`;
+    }).join('');
+
+    const times = bets.filter(b => b.time !== 'Ei sammu').map(b => b.time);
+    if (times.length) {
+      const ts = [...times].sort();
+      document.getElementById('earliest-bet').textContent = ts[0];
+      document.getElementById('latest-bet').textContent = ts[ts.length-1];
+    } else {
+      document.getElementById('earliest-bet').textContent = '–';
+      document.getElementById('latest-bet').textContent = '–';
+    }
+  }
+
+  render();
+  setInterval(render, 30000);
+</script>
+</body>
+</html>
